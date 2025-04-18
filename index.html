@@ -62,18 +62,46 @@
 <body>
   <div class="form-container">
     <h2>🎀 HairSnap 表單</h2>
-    <input type="text" placeholder="髮型名稱">
-    <input type="text" placeholder="分類">
-    <input type="text" placeholder="層次設計">
-    <label>參考圖片</label>
-    <input type="file">
-    <input type="text" placeholder="使用情境">
-    <textarea placeholder="特點說明"></textarea>
-    <input type="text" placeholder="顏色 / 配件">
-    <input type="text" placeholder="狀態">
-    <button type="submit">✨ 送出到 Notion</button>
+    <form id="hairsnap-form">
+      <input type="text" name="髮型名稱" placeholder="髮型名稱" required>
+      <input type="text" name="分類" placeholder="分類" required>
+      <input type="text" name="層次設計" placeholder="層次設計">
+      <label>參考圖片</label>
+      <input type="file" name="參考圖片" id="參考圖片">
+      <input type="text" name="使用情境" placeholder="使用情境">
+      <textarea name="特點說明" placeholder="特點說明"></textarea>
+      <input type="text" name="顏色 / 配件" placeholder="顏色 / 配件">
+      <input type="text" name="狀態" placeholder="狀態" required>
+      <button type="submit">✨ 送出到 Notion</button>
+    </form>
   </div>
+
   <script>
+    document.getElementById("hairsnap-form").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const formData = new FormData(form);
+      const data = {};
+      formData.forEach((value, key) => {
+        data[key] = value;
+      });
+
+      try {
+        const response = await fetch("https://script.google.com/macros/s/AKfycbzuDVxbRW8Q9o9HZTPOTCgceJeL3JZWBVW0Rsgg_PUA5sQXINcTG4q5uG0_gTeeNcPx/exec", {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
+        });
+        alert("✅ 已送出表單到 Notion！");
+        form.reset();
+      } catch (error) {
+        alert("❌ 送出失敗，請稍後再試。\n" + error);
+      }
+    });
+
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./service-worker.js');
     }
