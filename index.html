@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HairSnap 表單</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon-512.png">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f7f9fc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+      min-height: 100vh;
+    }
+    .form-container {
+      width: 100%;
+      max-width: 500px;
+      background-color: white;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      box-sizing: border-box;
+    }
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    .form-container input,
+    .form-container textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      box-sizing: border-box;
+    }
+    .form-container button {
+      width: 100%;
+      padding: 10px;
+      background-color: #ff5e9e;
+      border: none;
+      color: white;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .form-container button:hover {
+      background-color: #ff3e7e;
+    }
+    .tip {
+      text-align: center;
+      font-size: 12px;
+      color: #888;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>🎀 HairSnap 表單</h2>
+    <form id="form">
+      <input name="髮型名稱" placeholder="髮型名稱" required>
+      <input name="分類" placeholder="分類" required>
+      <input name="層次設計" placeholder="層次設計">
+      <input name="使用情境" placeholder="使用情境">
+      <textarea name="特點說明" placeholder="特點說明"></textarea>
+      <input name="顏色 / 配件" placeholder="顏色 / 配件">
+      <input name="狀態" placeholder="狀態" required>
+      <input type="file" name="參考圖片" id="image">
+      <button type="submit">✨ 送出到 Notion</button>
+    </form>
+    <div class="tip">若未見送出按鈕，請滑動畫面 ✨</div>
+  </div>
+  <script>
+    const form = document.getElementById("form");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const data = {};
+      formData.forEach((value, key) => {
+        data[key] = value;
+      });
+
+      try {
+        await fetch("https://script.google.com/macros/s/AKfycbzuDVxbRW8Q9o9HZTPOTCgceJeL3JZWBVW0Rsgg_PUA5sQXINcTG4q5uG0_gTeeNcPx/exec", {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
+        });
+        alert("✅ 資料已送出！");
+        form.reset();
+      } catch (err) {
+        alert("❌ 發生錯誤：" + err.message);
+      }
+    });
+  </script>
+</body>
+</html>
