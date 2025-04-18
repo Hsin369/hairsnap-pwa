@@ -7,14 +7,12 @@
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="icon-512.png" />
   <style>
-    body {
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       background-color: #f7f9fc;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 15px;
-      min-height: 100vh;
     }
     .form-container {
       width: 100%;
@@ -24,6 +22,8 @@
       border-radius: 20px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       box-sizing: border-box;
+      margin: 30px auto;
+      min-height: 600px;
     }
     .form-container h2 {
       text-align: center;
@@ -52,6 +52,12 @@
     .form-container button:hover {
       background-color: #ff3e7e;
     }
+    .tip {
+      text-align: center;
+      font-size: 12px;
+      color: #888;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
@@ -69,9 +75,8 @@
       <input type="text" name="狀態" placeholder="狀態" required />
       <button type="submit">✨ 送出到 Notion</button>
     </form>
-    <div style="text-align: center; margin-top: 10px; font-size: 12px; color: #888;">
-      v2 rendered successfully
-    </div>
+    <div class="tip">若未見送出按鈕，請往下滑 ✨</div>
+    <div class="tip">v4 rendered ✅</div>
   </div>
   <script>
     const form = document.getElementById("form");
