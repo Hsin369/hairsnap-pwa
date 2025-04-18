@@ -1,0 +1,15 @@
+{
+  "name": "HairSnap",
+  "short_name": "HairSnap",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f7f9fc",
+  "theme_color": "#ff5e9e",
+  "icons": [
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
