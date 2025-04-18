@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HairSnap 表單</title>
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" href="icon-512.png" type="image/png">
-  <link rel="apple-touch-icon" href="icon-512.png">
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icon-512.png" />
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       background-color: #f7f9fc;
       display: flex;
       justify-content: center;
@@ -22,7 +21,7 @@
       background-color: white;
       padding: 20px;
       border-radius: 20px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       box-sizing: border-box;
     }
     .form-container h2 {
@@ -52,40 +51,36 @@
     .form-container button:hover {
       background-color: #ff3e7e;
     }
-    @media (max-width: 480px) {
-      .form-container {
-        padding: 15px;
-      }
-    }
   </style>
 </head>
 <body>
   <div class="form-container">
     <h2>🎀 HairSnap 表單</h2>
-    <form id="hairsnap-form">
-      <input type="text" name="髮型名稱" placeholder="髮型名稱" required>
-      <input type="text" name="分類" placeholder="分類" required>
-      <input type="text" name="層次設計" placeholder="層次設計">
+    <form id="form">
+      <input type="text" name="髮型名稱" placeholder="髮型名稱" required />
+      <input type="text" name="分類" placeholder="分類" required />
+      <input type="text" name="層次設計" placeholder="層次設計" />
       <label>參考圖片</label>
-      <input type="file" name="參考圖片" id="參考圖片">
-      <input type="text" name="使用情境" placeholder="使用情境">
+      <input type="file" name="參考圖片" id="參考圖片" />
+      <input type="text" name="使用情境" placeholder="使用情境" />
       <textarea name="特點說明" placeholder="特點說明"></textarea>
-      <input type="text" name="顏色 / 配件" placeholder="顏色 / 配件">
-      <input type="text" name="狀態" placeholder="狀態" required>
+      <input type="text" name="顏色 / 配件" placeholder="顏色 / 配件" />
+      <input type="text" name="狀態" placeholder="狀態" required />
       <button type="submit">✨ 送出到 Notion</button>
     </form>
   </div>
   <script>
-    document.getElementById("hairsnap-form").addEventListener("submit", async function(e) {
+    const form = document.getElementById("form");
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const form = e.target;
       const formData = new FormData(form);
       const data = {};
       formData.forEach((value, key) => {
         data[key] = value;
       });
+
       try {
-        const response = await fetch("https://script.google.com/macros/s/AKfycbzuDVxbRW8Q9o9HZTPOTCgceJeL3JZWBVW0Rsgg_PUA5sQXINcTG4q5uG0_gTeeNcPx/exec", {
+        await fetch("https://script.google.com/macros/s/AKfycbzuDVxbRW8Q9o9HZTPOTCgceJeL3JZWBVW0Rsgg_PUA5sQXINcTG4q5uG0_gTeeNcPx/exec", {
           method: "POST",
           mode: "no-cors",
           headers: {
@@ -95,14 +90,10 @@
         });
         alert("✅ 已送出表單到 Notion！");
         form.reset();
-      } catch (error) {
-        alert("❌ 送出失敗，請稍後再試。\n" + error);
+      } catch (err) {
+        alert("❌ 送出失敗：" + err.message);
       }
     });
-
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./service-worker.js');
-    }
   </script>
 </body>
 </html>
